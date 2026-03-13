@@ -1,0 +1,9 @@
+{
+  "name": "MKB64",
+  "pathEmu": "G:\\ares\\ares-v147\\ares.exe",
+  "pathN64Inst": "",
+  "romName": "MKB64",
+  "sceneIdLastOpened": 1,
+  "sceneIdOnBoot": 1,
+  "sceneIdOnReset": 1
+}
