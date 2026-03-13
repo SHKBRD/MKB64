@@ -5,7 +5,7 @@
       {
         "data": {
           "culling": false,
-          "layerIdx": 0,
+          "layerIdx": 1,
           "material": {
             "depth": 0,
             "env": [
@@ -39,7 +39,7 @@
         },
         "id": 1,
         "name": "Model (Static)",
-        "uuid": 13715616490110052277
+        "uuid": 11653938766263995571
       },
       {
         "data": {
@@ -47,13 +47,13 @@
           "script": 14738989429172571928
         },
         "id": 0,
-        "name": "Ball",
-        "uuid": 1553061783768814214
+        "name": "Code",
+        "uuid": 14540762614326292475
       }
     ],
     "enabled": true,
-    "id": 10,
-    "name": "Player",
+    "id": 1,
+    "name": "Ball",
     "pos": [
       0.0,
       0.0,
@@ -73,8 +73,8 @@
       1.0
     ],
     "selectable": true,
-    "uuid": 939401214,
+    "uuid": 1587892022,
     "uuidPrefab": 0
   },
-  "uuid": 489608048
+  "uuid": 3385591945
 }

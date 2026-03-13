@@ -92,40 +92,7 @@
       {
         "children": [
           {
-            "children": [
-              {
-                "children": [],
-                "components": [],
-                "enabled": true,
-                "id": 1,
-                "name": "Player (1)",
-                "pos": [
-                  0.0,
-                  0.0,
-                  0.0
-                ],
-                "propOverrides": {
-                  "11272843812465326562": "1:1.000000,1.000000,1.000000",
-                  "13911321452997764027": "1:-38.059399,0.000000,-35.641766",
-                  "9467563534403475754": "0:0.000000,0.000000,0.000000,1.000000"
-                },
-                "proportionalScale": false,
-                "rot": [
-                  0.0,
-                  0.0,
-                  0.0,
-                  1.0
-                ],
-                "scale": [
-                  1.0,
-                  1.0,
-                  1.0
-                ],
-                "selectable": true,
-                "uuid": 3572056067,
-                "uuidPrefab": 489608048
-              }
-            ],
+            "children": [],
             "components": [],
             "enabled": true,
             "id": 9,
@@ -167,7 +134,7 @@
                 ],
                 "propOverrides": {
                   "11272843812465326562": "1:0.999997,0.999994,0.999981",
-                  "13911321452997764027": "1:0.000000,32.000000,96.000000",
+                  "13911321452997764027": "1:0.000000,32.000000,176.226883",
                   "9467563534403475754": "0:0.000000,0.000000,0.000000,1.000000"
                 },
                 "proportionalScale": false,
@@ -358,74 +325,6 @@
             "selectable": true,
             "uuid": 542911442,
             "uuidPrefab": 0
-          },
-          {
-            "children": [],
-            "components": [
-              {
-                "data": {
-                  "culling": false,
-                  "layerIdx": 0,
-                  "material": {
-                    "depth": 0,
-                    "env": [
-                      0.0,
-                      0.0,
-                      0.0,
-                      0.0
-                    ],
-                    "fresnel": 0,
-                    "fresnelColor": [
-                      0.0,
-                      0.0,
-                      0.0,
-                      0.0
-                    ],
-                    "lighting": false,
-                    "prim": [
-                      0.0,
-                      0.0,
-                      0.0,
-                      0.0
-                    ],
-                    "setDepth": false,
-                    "setEnv": false,
-                    "setFresnel": false,
-                    "setLighting": false,
-                    "setPrim": false
-                  },
-                  "meshFilter": "",
-                  "model": 7828806687264292798
-                },
-                "id": 1,
-                "name": "Model (Static)",
-                "uuid": 2053525109592206341
-              }
-            ],
-            "enabled": true,
-            "id": 6,
-            "name": "New Object",
-            "pos": [
-              0.0,
-              0.0,
-              -17.07329559326172
-            ],
-            "propOverrides": {},
-            "proportionalScale": false,
-            "rot": [
-              0.0,
-              0.0,
-              0.0,
-              1.0
-            ],
-            "scale": [
-              1.0,
-              1.0,
-              1.0
-            ],
-            "selectable": true,
-            "uuid": 4023514807,
-            "uuidPrefab": 0
           }
         ],
         "components": [
@@ -466,6 +365,38 @@
         "selectable": true,
         "uuid": 847888586,
         "uuidPrefab": 0
+      },
+      {
+        "children": [],
+        "components": [],
+        "enabled": true,
+        "id": 1,
+        "name": "Ball (1)",
+        "pos": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "propOverrides": {
+          "11272843812465326562": "1:1.000000,1.000000,1.000000",
+          "13911321452997764027": "1:0.000000,0.000000,0.000000",
+          "9467563534403475754": "0:0.000000,0.000000,0.000000,1.000000"
+        },
+        "proportionalScale": false,
+        "rot": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "selectable": true,
+        "uuid": 3842832322,
+        "uuidPrefab": 3385591945
       }
     ],
     "components": [],
