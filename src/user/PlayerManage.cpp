@@ -38,7 +38,7 @@ namespace P64::Script::C2A3F0709DB1C5E7
     data->playerCount = playerCount;
     for (uint8_t i=0; i<playerCount; ++i) {
       Scene& sc = obj.getScene();
-      uint16_t newPlayerId = sc.addObject("ball/ball.pf"_asset, obj.pos);
+      //uint16_t newPlayerId = sc.addObject("ball/ball.pf"_asset, obj.pos);
     }
   }
 

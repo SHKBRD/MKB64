@@ -106,7 +106,7 @@
                 ],
                 "propOverrides": {
                   "11272843812465326562": "1:1.000000,1.000000,1.000000",
-                  "13911321452997764027": "1:0.000000,0.000000,0.000000",
+                  "13911321452997764027": "1:-38.059399,0.000000,-35.641766",
                   "9467563534403475754": "0:0.000000,0.000000,0.000000,1.000000"
                 },
                 "proportionalScale": false,
@@ -150,6 +150,67 @@
             ],
             "selectable": true,
             "uuid": 1548615624,
+            "uuidPrefab": 0
+          },
+          {
+            "children": [
+              {
+                "children": [],
+                "components": [],
+                "enabled": true,
+                "id": 2,
+                "name": "Camera",
+                "pos": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "propOverrides": {
+                  "11272843812465326562": "1:0.999997,0.999994,0.999981",
+                  "13911321452997764027": "1:0.000000,32.000000,96.000000",
+                  "9467563534403475754": "0:0.000000,0.000000,0.000000,1.000000"
+                },
+                "proportionalScale": false,
+                "rot": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "scale": [
+                  0.9999967217445374,
+                  0.9999942183494568,
+                  0.9999811053276062
+                ],
+                "selectable": true,
+                "uuid": 2247738849,
+                "uuidPrefab": 3405452236
+              }
+            ],
+            "components": [],
+            "enabled": true,
+            "id": 4,
+            "name": "Cameras",
+            "pos": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "propOverrides": {},
+            "proportionalScale": false,
+            "rot": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "selectable": true,
+            "uuid": 2023719746,
             "uuidPrefab": 0
           },
           {
@@ -299,48 +360,55 @@
             "uuidPrefab": 0
           },
           {
-            "children": [
+            "children": [],
+            "components": [
               {
-                "children": [],
-                "components": [],
-                "enabled": true,
-                "id": 2,
-                "name": "Camera",
-                "pos": [
-                  0.0,
-                  0.0,
-                  0.0
-                ],
-                "propOverrides": {
-                  "11272843812465326562": "1:0.999997,0.999994,0.999981",
-                  "13911321452997764027": "1:0.000000,32.000000,96.000000",
-                  "9467563534403475754": "0:0.000000,0.000000,0.000000,1.000000"
+                "data": {
+                  "culling": false,
+                  "layerIdx": 0,
+                  "material": {
+                    "depth": 0,
+                    "env": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      0.0
+                    ],
+                    "fresnel": 0,
+                    "fresnelColor": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      0.0
+                    ],
+                    "lighting": false,
+                    "prim": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      0.0
+                    ],
+                    "setDepth": false,
+                    "setEnv": false,
+                    "setFresnel": false,
+                    "setLighting": false,
+                    "setPrim": false
+                  },
+                  "meshFilter": "",
+                  "model": 7828806687264292798
                 },
-                "proportionalScale": false,
-                "rot": [
-                  0.0,
-                  0.0,
-                  0.0,
-                  1.0
-                ],
-                "scale": [
-                  0.9999967217445374,
-                  0.9999942183494568,
-                  0.9999811053276062
-                ],
-                "selectable": true,
-                "uuid": 2247738849,
-                "uuidPrefab": 3405452236
+                "id": 1,
+                "name": "Model (Static)",
+                "uuid": 2053525109592206341
               }
             ],
-            "components": [],
             "enabled": true,
-            "id": 4,
-            "name": "Cameras",
+            "id": 6,
+            "name": "New Object",
             "pos": [
               0.0,
               0.0,
-              0.0
+              -17.07329559326172
             ],
             "propOverrides": {},
             "proportionalScale": false,
@@ -356,7 +424,7 @@
               1.0
             ],
             "selectable": true,
-            "uuid": 2023719746,
+            "uuid": 4023514807,
             "uuidPrefab": 0
           }
         ],
