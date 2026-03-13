@@ -2,9 +2,9 @@
   "conf": {
     "audioFreq": 32000,
     "clearColor": [
-      0.20967739820480347,
-      0.20967739820480347,
-      0.20967739820480347,
+      0.45967739820480347,
+      0.9084938168525696,
+      1.0,
       1.0
     ],
     "doClearColor": true,
@@ -95,11 +95,11 @@
             "children": [],
             "components": [],
             "enabled": true,
-            "id": 9,
-            "name": "Players",
+            "id": 2,
+            "name": "STARTPOS",
             "pos": [
               0.0,
-              0.0,
+              64.0,
               0.0
             ],
             "propOverrides": {},
@@ -116,48 +116,55 @@
               1.0
             ],
             "selectable": true,
-            "uuid": 1548615624,
+            "uuid": 1159279209,
             "uuidPrefab": 0
           },
           {
-            "children": [
+            "children": [],
+            "components": [
               {
-                "children": [],
-                "components": [],
-                "enabled": true,
-                "id": 2,
-                "name": "Camera",
-                "pos": [
-                  0.0,
-                  0.0,
-                  0.0
-                ],
-                "propOverrides": {
-                  "11272843812465326562": "1:0.999997,0.999994,0.999981",
-                  "13911321452997764027": "1:0.000000,32.000000,176.226883",
-                  "9467563534403475754": "0:0.000000,0.000000,0.000000,1.000000"
+                "data": {
+                  "culling": false,
+                  "layerIdx": 0,
+                  "material": {
+                    "depth": 0,
+                    "env": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      0.0
+                    ],
+                    "fresnel": 0,
+                    "fresnelColor": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      0.0
+                    ],
+                    "lighting": false,
+                    "prim": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      0.0
+                    ],
+                    "setDepth": false,
+                    "setEnv": false,
+                    "setFresnel": false,
+                    "setLighting": false,
+                    "setPrim": false
+                  },
+                  "meshFilter": "",
+                  "model": 789646966674591193
                 },
-                "proportionalScale": false,
-                "rot": [
-                  0.0,
-                  0.0,
-                  0.0,
-                  1.0
-                ],
-                "scale": [
-                  0.9999967217445374,
-                  0.9999942183494568,
-                  0.9999811053276062
-                ],
-                "selectable": true,
-                "uuid": 2247738849,
-                "uuidPrefab": 3405452236
+                "id": 1,
+                "name": "Model (Static)",
+                "uuid": 18203300646785388873
               }
             ],
-            "components": [],
             "enabled": true,
-            "id": 4,
-            "name": "Cameras",
+            "id": 6,
+            "name": "MainStage",
             "pos": [
               0.0,
               0.0,
@@ -177,9 +184,38 @@
               1.0
             ],
             "selectable": true,
-            "uuid": 2023719746,
+            "uuid": 596857787,
             "uuidPrefab": 0
-          },
+          }
+        ],
+        "components": [],
+        "enabled": true,
+        "id": 1,
+        "name": "Stage",
+        "pos": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "propOverrides": {},
+        "proportionalScale": false,
+        "rot": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "selectable": true,
+        "uuid": 3172842217,
+        "uuidPrefab": 0
+      },
+      {
+        "children": [
           {
             "children": [
               {
@@ -325,14 +361,71 @@
             "selectable": true,
             "uuid": 542911442,
             "uuidPrefab": 0
+          },
+          {
+            "children": [],
+            "components": [],
+            "enabled": true,
+            "id": 4,
+            "name": "Cameras",
+            "pos": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "propOverrides": {},
+            "proportionalScale": false,
+            "rot": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "selectable": true,
+            "uuid": 2023719746,
+            "uuidPrefab": 0
+          },
+          {
+            "children": [],
+            "components": [],
+            "enabled": true,
+            "id": 9,
+            "name": "Players",
+            "pos": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "propOverrides": {},
+            "proportionalScale": false,
+            "rot": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "selectable": true,
+            "uuid": 1548615624,
+            "uuidPrefab": 0
           }
         ],
         "components": [
           {
             "data": {
               "args": {
-                "cameraContainer": "",
-                "playerContainer": "1548615624"
+                "cameraContainer": "2023719746",
+                "playerContainer": "1548615624",
+                "startPos": "1159279209"
               },
               "script": 14025318031034533351
             },
@@ -365,38 +458,6 @@
         "selectable": true,
         "uuid": 847888586,
         "uuidPrefab": 0
-      },
-      {
-        "children": [],
-        "components": [],
-        "enabled": true,
-        "id": 1,
-        "name": "Ball (1)",
-        "pos": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "propOverrides": {
-          "11272843812465326562": "1:1.000000,1.000000,1.000000",
-          "13911321452997764027": "1:0.000000,0.000000,0.000000",
-          "9467563534403475754": "0:0.000000,0.000000,0.000000,1.000000"
-        },
-        "proportionalScale": false,
-        "rot": [
-          0.0,
-          0.0,
-          0.0,
-          1.0
-        ],
-        "scale": [
-          1.0,
-          1.0,
-          1.0
-        ],
-        "selectable": true,
-        "uuid": 3842832322,
-        "uuidPrefab": 3385591945
       }
     ],
     "components": [],

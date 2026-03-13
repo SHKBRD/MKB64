@@ -1,6 +1,9 @@
 #include "script/userScript.h"
 #include "scene/sceneManager.h"
 #include "../p64/assetTable.h"
+#include "scene/components/camera.h"
+
+#include "systems/World.h"
 
 namespace P64::Script::C2A3F0709DB1C5E7
 {
@@ -16,35 +19,56 @@ namespace P64::Script::C2A3F0709DB1C5E7
     //
     // Other types can be used but are not exposed in the editor.
 
-    
-
-    uint8_t playerCount;
-
     [[P64::Name("Player Container")]]
     ObjectRef playerContainer;
-    uint16_t playerIDs[4]{0, 0, 0, 0};
 
     [[P64::Name("Camera Container")]]
     ObjectRef cameraContainer;
-    uint16_t cameraIDs[4]{0, 0, 0, 0};
+
+    [[P64::Name("Start Position")]]
+    ObjectRef startPos;
 
   );
 
   // The following functions are called by the engine at different points in the object's lifecycle.
   // If you don't need a specific function you can remove it.
 
+  void reset_cameras(Data *data)
+  {
+    for (uint8_t i=0; i<4; ++i) {
+      if (User::world.cameraIDs[i] == 0) continue;
+      User::world.cameraIDs[i] = 0;
+      data->cameraContainer.get()->iterChildren([](Object* child){
+        child->remove();
+      });
+    }
+  };
+
+
   void add_players(uint8_t playerCount, Object& obj, Data *data) 
   {
-    data->playerCount = playerCount;
+    User::world.playerCount = playerCount;
     for (uint8_t i=0; i<playerCount; ++i) {
       Scene& sc = obj.getScene();
-      //uint16_t newPlayerId = sc.addObject("ball/ball.pf"_asset, obj.pos);
+
+      fm_vec3_t startPos = data->startPos.get()->pos;
+
+      uint16_t newPlayerId = sc.addObject("ball/Ball.pf"_asset, startPos);
+      User::world.playerIDs[i] = newPlayerId;
+
+      uint16_t playerCam = sc.addObject("Camera.pf"_asset, startPos);
+      User::world.cameraIDs[i] = playerCam;
+      
     }
   }
+
+  
 
   void init(Object& obj, Data *data)
   {
     // initialization, this is called once when the object spawns
+    reset_cameras(data);
+    
     add_players(1, obj, data);
     
   }
@@ -57,6 +81,7 @@ namespace P64::Script::C2A3F0709DB1C5E7
   void update(Object& obj, Data *data, float deltaTime)
   {
     // this is called once every frame, put your main logic here
+    
   }
 
   void draw(Object& obj, Data *data, float deltaTime)
