@@ -2,13 +2,13 @@
   "conf": {
     "audioFreq": 32000,
     "clearColor": [
-      0.20967739820480347,
-      0.20967739820480347,
-      0.20967739820480347,
+      0.3306451439857483,
+      0.3306451439857483,
+      0.3306451439857483,
       1.0
     ],
-    "doClearColor": true,
-    "doClearDepth": true,
+    "doClearColor": false,
+    "doClearDepth": false,
     "fbFormat": 0,
     "fbHeight": 240,
     "fbWidth": 320,
@@ -84,7 +84,7 @@
         "name": "PTX Opaque"
       }
     ],
-    "name": "Scene",
+    "name": "New Scene",
     "renderPipeline": 0
   },
   "graph": {
@@ -95,10 +95,88 @@
             "children": [
               {
                 "children": [],
+                "components": [
+                  {
+                    "data": {
+                      "aspect": 0.0,
+                      "far": 4000.0,
+                      "fov": 65.0,
+                      "mode": 0,
+                      "near": 100.0,
+                      "vpOffset": [
+                        0,
+                        0
+                      ],
+                      "vpSize": [
+                        320,
+                        240
+                      ]
+                    },
+                    "id": 3,
+                    "name": "Camera",
+                    "uuid": 4470314647836892143
+                  }
+                ],
+                "enabled": true,
+                "id": 6,
+                "name": "Camera",
+                "pos": [
+                  0.0,
+                  32.0,
+                  249.87142944335938
+                ],
+                "propOverrides": {},
+                "proportionalScale": false,
+                "rot": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "selectable": true,
+                "uuid": 555872693,
+                "uuidPrefab": 0
+              }
+            ],
+            "components": [],
+            "enabled": true,
+            "id": 1,
+            "name": "Cameras",
+            "pos": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "propOverrides": {},
+            "proportionalScale": false,
+            "rot": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "selectable": true,
+            "uuid": 2998442968,
+            "uuidPrefab": 0
+          },
+          {
+            "children": [
+              {
+                "children": [],
                 "components": [],
                 "enabled": true,
-                "id": 1,
-                "name": "Player (1)",
+                "id": 5,
+                "name": "Player (5)",
                 "pos": [
                   0.0,
                   0.0,
@@ -122,13 +200,13 @@
                   1.0
                 ],
                 "selectable": true,
-                "uuid": 3572056067,
+                "uuid": 1058322222,
                 "uuidPrefab": 489608048
               }
             ],
             "components": [],
             "enabled": true,
-            "id": 9,
+            "id": 3,
             "name": "Players",
             "pos": [
               0.0,
@@ -149,194 +227,31 @@
               1.0
             ],
             "selectable": true,
-            "uuid": 1548615624,
+            "uuid": 4292789148,
             "uuidPrefab": 0
           },
           {
-            "children": [
+            "children": [],
+            "components": [
               {
-                "children": [
-                  {
-                    "children": [],
-                    "components": [
-                      {
-                        "data": {
-                          "color": [
-                            0.2569100856781006,
-                            0.27049025893211365,
-                            0.27822577953338623,
-                            1.0
-                          ],
-                          "index": 0,
-                          "type": 0
-                        },
-                        "id": 2,
-                        "name": "Light",
-                        "uuid": 17810945128247966012
-                      }
-                    ],
-                    "enabled": true,
-                    "id": 3,
-                    "name": "Ambient Light",
-                    "pos": [
-                      -2.75,
-                      377.875,
-                      253.75
-                    ],
-                    "propOverrides": {},
-                    "proportionalScale": false,
-                    "rot": [
-                      0.0,
-                      0.0,
-                      0.0,
-                      1.0
-                    ],
-                    "scale": [
-                      1.0,
-                      1.0,
-                      1.0
-                    ],
-                    "selectable": true,
-                    "uuid": 2808468358,
-                    "uuidPrefab": 0
-                  },
-                  {
-                    "children": [],
-                    "components": [
-                      {
-                        "data": {
-                          "color": [
-                            0.8427419662475586,
-                            0.8427419662475586,
-                            0.8427419662475586,
-                            0.9529411792755127
-                          ],
-                          "index": 0,
-                          "type": 1
-                        },
-                        "id": 2,
-                        "name": "Light",
-                        "uuid": 7911520859892149400
-                      }
-                    ],
-                    "enabled": true,
-                    "id": 5,
-                    "name": "Dir. Light",
-                    "pos": [
-                      -60.0,
-                      370.0,
-                      300.0
-                    ],
-                    "propOverrides": {},
-                    "proportionalScale": false,
-                    "rot": [
-                      0.846150279045105,
-                      -0.15681137144565582,
-                      0.15778203308582306,
-                      0.4842981994152069
-                    ],
-                    "scale": [
-                      0.9999930262565613,
-                      1.0000044107437134,
-                      1.0000035762786865
-                    ],
-                    "selectable": true,
-                    "uuid": 1258577913,
-                    "uuidPrefab": 0
-                  }
-                ],
-                "components": [],
-                "enabled": true,
-                "id": 14,
-                "name": "Lights",
-                "pos": [
-                  0.0,
-                  0.0,
-                  0.0
-                ],
-                "propOverrides": {},
-                "proportionalScale": false,
-                "rot": [
-                  0.0,
-                  0.0,
-                  0.0,
-                  1.0
-                ],
-                "scale": [
-                  1.0,
-                  1.0,
-                  1.0
-                ],
-                "selectable": true,
-                "uuid": 2881888361,
-                "uuidPrefab": 0
-              }
-            ],
-            "components": [],
-            "enabled": true,
-            "id": 13,
-            "name": "Background",
-            "pos": [
-              0.0,
-              0.0,
-              0.0
-            ],
-            "propOverrides": {},
-            "proportionalScale": false,
-            "rot": [
-              0.0,
-              0.0,
-              0.0,
-              1.0
-            ],
-            "scale": [
-              1.0,
-              1.0,
-              1.0
-            ],
-            "selectable": true,
-            "uuid": 542911442,
-            "uuidPrefab": 0
-          },
-          {
-            "children": [
-              {
-                "children": [],
-                "components": [],
-                "enabled": true,
-                "id": 2,
-                "name": "Camera",
-                "pos": [
-                  0.0,
-                  0.0,
-                  0.0
-                ],
-                "propOverrides": {
-                  "11272843812465326562": "1:0.999997,0.999994,0.999981",
-                  "13911321452997764027": "1:0.000000,32.000000,96.000000",
-                  "9467563534403475754": "0:0.000000,0.000000,0.000000,1.000000"
+                "data": {
+                  "color": [
+                    0.3629032373428345,
+                    0.3629032373428345,
+                    0.3629032373428345,
+                    0.8941176533699036
+                  ],
+                  "index": 0,
+                  "type": 0
                 },
-                "proportionalScale": false,
-                "rot": [
-                  0.0,
-                  0.0,
-                  0.0,
-                  1.0
-                ],
-                "scale": [
-                  0.9999967217445374,
-                  0.9999942183494568,
-                  0.9999811053276062
-                ],
-                "selectable": true,
-                "uuid": 2247738849,
-                "uuidPrefab": 3405452236
+                "id": 2,
+                "name": "Light",
+                "uuid": 16377665695151954420
               }
             ],
-            "components": [],
             "enabled": true,
             "id": 4,
-            "name": "Cameras",
+            "name": "Amb light",
             "pos": [
               0.0,
               0.0,
@@ -356,7 +271,51 @@
               1.0
             ],
             "selectable": true,
-            "uuid": 2023719746,
+            "uuid": 1749345965,
+            "uuidPrefab": 0
+          },
+          {
+            "children": [],
+            "components": [
+              {
+                "data": {
+                  "color": [
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0
+                  ],
+                  "index": 0,
+                  "type": 1
+                },
+                "id": 2,
+                "name": "Light",
+                "uuid": 6831580854702299001
+              }
+            ],
+            "enabled": true,
+            "id": 7,
+            "name": "DirLight",
+            "pos": [
+              32.0,
+              0.0,
+              0.0
+            ],
+            "propOverrides": {},
+            "proportionalScale": false,
+            "rot": [
+              -0.4799588620662689,
+              -0.16551212966442108,
+              0.8144686818122864,
+              -0.28086650371551514
+            ],
+            "scale": [
+              0.9999990463256836,
+              0.9999991655349731,
+              0.9999986290931702
+            ],
+            "selectable": true,
+            "uuid": 3904191731,
             "uuidPrefab": 0
           }
         ],
@@ -364,18 +323,18 @@
           {
             "data": {
               "args": {
-                "cameraContainer": "",
-                "playerContainer": "1548615624"
+                "cameraContainer": "2998442968",
+                "playerContainer": "4292789148"
               },
               "script": 14025318031034533351
             },
             "id": 0,
             "name": "Code",
-            "uuid": 15128791285106739446
+            "uuid": 13573817513611701105
           }
         ],
         "enabled": true,
-        "id": 12,
+        "id": 2,
         "name": "World",
         "pos": [
           0.0,
@@ -396,7 +355,7 @@
           1.0
         ],
         "selectable": true,
-        "uuid": 847888586,
+        "uuid": 3370363495,
         "uuidPrefab": 0
       }
     ],

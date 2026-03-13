@@ -1,0 +1,80 @@
+{
+  "obj": {
+    "children": [],
+    "components": [
+      {
+        "data": {
+          "culling": false,
+          "layerIdx": 0,
+          "material": {
+            "depth": 0,
+            "env": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "fresnel": 0,
+            "fresnelColor": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "lighting": false,
+            "prim": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "setDepth": false,
+            "setEnv": false,
+            "setFresnel": false,
+            "setLighting": false,
+            "setPrim": false
+          },
+          "meshFilter": "",
+          "model": 7828806687264292798
+        },
+        "id": 1,
+        "name": "Model (Static)",
+        "uuid": 13715616490110052277
+      },
+      {
+        "data": {
+          "args": {},
+          "script": 14738989429172571928
+        },
+        "id": 0,
+        "name": "Ball",
+        "uuid": 1553061783768814214
+      }
+    ],
+    "enabled": true,
+    "id": 10,
+    "name": "Player",
+    "pos": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "propOverrides": {},
+    "proportionalScale": false,
+    "rot": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "scale": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "selectable": true,
+    "uuid": 939401214,
+    "uuidPrefab": 0
+  },
+  "uuid": 489608048
+}

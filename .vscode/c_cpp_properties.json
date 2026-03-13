@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "name": "N64",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "C:/msys64/home/dariu/libdragon/**",
+                "C:/msys64/home/dariu/tiny3d"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "cppStandard": "c++23",
+            "configurationProvider": "ms-vscode.makefile-tools",
+            "compilerPath": "C:/msys64/pyrite64-sdk/bin/mips64-elf-gcc.exe",
+            "intelliSenseMode": "gcc-x86"
+        }
+    ],
+    "version": 4
+}
