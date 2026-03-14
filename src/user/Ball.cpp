@@ -111,7 +111,7 @@ namespace P64::Script::CC8B68CB9A118F18
     
 
     fm_vec2_t tiltDiff = (camAdjustedInput * FM_DEG2RAD(Player::MAX_TILT_ANGLE) - data->prevStageTilt);
-    User::world.stageTilt[data->playerNumber] += tiltDiff * Player::TILT_EASING;
+    User::world.stageTilt[data->playerNumber] += tiltDiff * Player::STAGE_TILT_EASING;
   }
 
   void update_cameras(Object& obj, Data *data, float deltaTime)
@@ -125,11 +125,14 @@ namespace P64::Script::CC8B68CB9A118F18
     if (fm_vec3_len2(&data->camAimTarget) < 0.01) {
       data->camAimTarget = obj.pos - data->camera->getPos();
     }
-
     fm_vec3_norm(&data->camAimTarget, &data->camAimTarget);
 
-    //fm_vec3_t playerRot = player->rot * fm_vec3_t{0.0, 0.0, 1.0}; // rot * forward
-    
+    // LERP CODE START
+    fm_vec3_t lerpedLookAngle{};
+    fm_vec3_lerp(&lerpedLookAngle, &data->oldCamAimTarget, &data->camAimTarget, Player::PLAYER_CAMERA_TURN_EASING);
+    data->camAimTarget = lerpedLookAngle;
+    // LERP CODE END
+
     fm_vec3_t playerNextPos = player->pos + data->bcs->velocity * deltaTime;
 
     // lateral movement away from player
@@ -148,6 +151,8 @@ namespace P64::Script::CC8B68CB9A118F18
     data->playerNumber = get_player_number(obj, data);
     data->prevStageTilt = fm_vec2_t{0.0, 0.0};
     data->bcs->velocity = fm_vec3_t{0.01, 0.0, 0.0};
+    data->camAimTarget = {};
+    data->camAimTarget = {};
     data->camera = &obj.getScene().getObjectById(User::world.cameraIDs[data->playerNumber])->getComponent<Comp::Camera>()->camera;
     update_cameras(obj, data, 1/60.0f);
   }
