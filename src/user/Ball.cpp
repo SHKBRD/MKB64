@@ -4,6 +4,8 @@
 #include "debug.h"
 #include <vi/swapChain.h>
 #include "scene/components/camera.h"
+#include "scene/components/collBody.h"
+#include "collision/attach.h"
 #include <libdragon.h>
 
 #include "systems/World.h"
@@ -15,8 +17,8 @@ namespace {
   const float CAM_PLAYER_ABOVE = 16.0;
   const fm_vec3_t CAM_PLAYER_FOCUS_OFFSET = {0.0,8.0,0.0};
 
-  const float GRAVITY = 1.4 * 16;
-  const float FRICTION = 0.8;
+  const float GRAVITY = 1 * 16;
+  const float FRICTION = 0.97;
 }
 
 namespace P64::Script::CC8B68CB9A118F18
@@ -41,6 +43,8 @@ namespace P64::Script::CC8B68CB9A118F18
     fm_vec3_t velocity;
 
     Object* camera;
+
+    //Coll::Attach meshAttach;
 
   );
 
@@ -74,14 +78,14 @@ namespace P64::Script::CC8B68CB9A118F18
     
     // xz velocity += tilt
     data->velocity *= FRICTION;
-    data->velocity += downForce * fm_vec3_t{1.0, 0.0, 1.0} * deltaTime * 60;
+    data->velocity += downForce * fm_vec3_t{1.0, 0.0, 1.0};
     obj.pos += data->velocity * deltaTime * 60;
   }
 
   void update_stage_tilt(Object& obj, Data *data, float deltaTime) {
     data->prevStageTilt = User::world.stageTilt[data->playerNumber];
     joypad_inputs_t input = joypad_get_inputs((joypad_port_t)data->playerNumber);
-    fm_vec2_t normInpVec = fm_vec2_t{static_cast<float>(-input.stick_x), static_cast<float>(input.stick_y)}/128;
+    fm_vec2_t normInpVec{-input.stick_x/128.0f, input.stick_y/128.0f};
     fm_vec2_t tiltDiff = (normInpVec * FM_DEG2RAD(MAX_TILT_ANGLE) - data->prevStageTilt);
     User::world.stageTilt[data->playerNumber] += tiltDiff * TILT_EASING;
   }
@@ -107,6 +111,12 @@ namespace P64::Script::CC8B68CB9A118F18
     
   }
 
+  void update_player_body(Coll::BCS bcs, Object& obj, Data *data) {
+    //bcs.center -= data->meshAttach.update(bcs.center);
+    bcs.velocity = data->velocity;
+    //obj.pos += bcs.velocity;
+  }
+
   void init(Object& obj, Data *data)
   {
     // initialization, this is called once when the object spawns
@@ -121,8 +131,13 @@ namespace P64::Script::CC8B68CB9A118F18
   void update(Object& obj, Data *data, float deltaTime)
   {
     // this is called once every frame, put your main logic here
+    auto coll = obj.getComponent<Comp::CollBody>();
+    Coll::BCS &bcs = coll->bcs;
     update_stage_tilt(obj, data, deltaTime);
+
     update_player_movement(obj, data, deltaTime);
+    update_player_body(bcs, obj, data);
+
     update_cameras(obj, data, deltaTime);
   }
 
@@ -149,5 +164,11 @@ namespace P64::Script::CC8B68CB9A118F18
   void onCollision(Object& obj, Data *data, const Coll::CollEvent& event)
   {
     // collision callbacks, only used if any collider is attached
+    if(event.otherMesh)
+    {
+      //data->meshAttach.setReference(event.otherMesh);
+      data->velocity *= -1;
+      return;
+    }
   }
 }

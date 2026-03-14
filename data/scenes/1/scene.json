@@ -92,131 +92,6 @@
       {
         "children": [
           {
-            "children": [],
-            "components": [],
-            "enabled": true,
-            "id": 2,
-            "name": "STARTPOS",
-            "pos": [
-              0.0,
-              64.0,
-              0.0
-            ],
-            "propOverrides": {},
-            "proportionalScale": false,
-            "rot": [
-              0.0,
-              0.0,
-              0.0,
-              1.0
-            ],
-            "scale": [
-              1.0,
-              1.0,
-              1.0
-            ],
-            "selectable": true,
-            "uuid": 1159279209,
-            "uuidPrefab": 0
-          },
-          {
-            "children": [],
-            "components": [
-              {
-                "data": {
-                  "culling": false,
-                  "layerIdx": 0,
-                  "material": {
-                    "depth": 0,
-                    "env": [
-                      0.0,
-                      0.0,
-                      0.0,
-                      0.0
-                    ],
-                    "fresnel": 0,
-                    "fresnelColor": [
-                      0.0,
-                      0.0,
-                      0.0,
-                      0.0
-                    ],
-                    "lighting": false,
-                    "prim": [
-                      0.0,
-                      0.0,
-                      0.0,
-                      0.0
-                    ],
-                    "setDepth": false,
-                    "setEnv": false,
-                    "setFresnel": false,
-                    "setLighting": false,
-                    "setPrim": false
-                  },
-                  "meshFilter": "",
-                  "model": 789646966674591193
-                },
-                "id": 1,
-                "name": "Model (Static)",
-                "uuid": 18203300646785388873
-              }
-            ],
-            "enabled": true,
-            "id": 6,
-            "name": "MainStage",
-            "pos": [
-              0.0,
-              0.0,
-              0.0
-            ],
-            "propOverrides": {},
-            "proportionalScale": false,
-            "rot": [
-              0.0,
-              0.0,
-              0.0,
-              1.0
-            ],
-            "scale": [
-              1.0,
-              1.0,
-              1.0
-            ],
-            "selectable": true,
-            "uuid": 596857787,
-            "uuidPrefab": 0
-          }
-        ],
-        "components": [],
-        "enabled": true,
-        "id": 1,
-        "name": "Stage",
-        "pos": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "propOverrides": {},
-        "proportionalScale": false,
-        "rot": [
-          0.0,
-          0.0,
-          0.0,
-          1.0
-        ],
-        "scale": [
-          1.0,
-          1.0,
-          1.0
-        ],
-        "selectable": true,
-        "uuid": 3172842217,
-        "uuidPrefab": 0
-      },
-      {
-        "children": [
-          {
             "children": [
               {
                 "children": [
@@ -416,6 +291,140 @@
             ],
             "selectable": true,
             "uuid": 1548615624,
+            "uuidPrefab": 0
+          },
+          {
+            "children": [
+              {
+                "children": [],
+                "components": [],
+                "enabled": true,
+                "id": 2,
+                "name": "STARTPOS",
+                "pos": [
+                  0.0,
+                  64.0,
+                  0.0
+                ],
+                "propOverrides": {},
+                "proportionalScale": false,
+                "rot": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "selectable": true,
+                "uuid": 1159279209,
+                "uuidPrefab": 0
+              },
+              {
+                "children": [],
+                "components": [
+                  {
+                    "data": {
+                      "culling": false,
+                      "layerIdx": 0,
+                      "material": {
+                        "depth": 0,
+                        "env": [
+                          0.0,
+                          0.0,
+                          0.0,
+                          0.0
+                        ],
+                        "fresnel": 0,
+                        "fresnelColor": [
+                          0.0,
+                          0.0,
+                          0.0,
+                          0.0
+                        ],
+                        "lighting": false,
+                        "prim": [
+                          0.0,
+                          0.0,
+                          0.0,
+                          0.0
+                        ],
+                        "setDepth": false,
+                        "setEnv": false,
+                        "setFresnel": false,
+                        "setLighting": false,
+                        "setPrim": false
+                      },
+                      "meshFilter": "",
+                      "model": 789646966674591193
+                    },
+                    "id": 1,
+                    "name": "Model (Static)",
+                    "uuid": 18203300646785388873
+                  },
+                  {
+                    "data": {
+                      "meshFilter": "",
+                      "modelUUID": 789646966674591193
+                    },
+                    "id": 4,
+                    "name": "Collision-Mesh",
+                    "uuid": 13051082809396525022
+                  }
+                ],
+                "enabled": true,
+                "id": 6,
+                "name": "MainStage",
+                "pos": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "propOverrides": {},
+                "proportionalScale": false,
+                "rot": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ],
+                "scale": [
+                  1.0,
+                  1.0,
+                  1.0
+                ],
+                "selectable": true,
+                "uuid": 596857787,
+                "uuidPrefab": 0
+              }
+            ],
+            "components": [],
+            "enabled": true,
+            "id": 1,
+            "name": "Stage",
+            "pos": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "propOverrides": {},
+            "proportionalScale": false,
+            "rot": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "selectable": true,
+            "uuid": 3172842217,
             "uuidPrefab": 0
           }
         ],
