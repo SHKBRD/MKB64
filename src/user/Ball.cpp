@@ -6,20 +6,11 @@
 #include "scene/components/camera.h"
 #include "scene/components/collBody.h"
 #include "collision/attach.h"
-#include <libdragon.h>
+
 
 #include "systems/World.h"
-
-namespace {
-  const float MAX_TILT_ANGLE = 23.0;
-  const float TILT_EASING = 0.2;
-  const float CAM_PLAYER_BEHIND = 48.0;
-  const float CAM_PLAYER_ABOVE = 16.0;
-  const fm_vec3_t CAM_PLAYER_FOCUS_OFFSET = {0.0,8.0,0.0};
-
-  const float GRAVITY = 1 * 16;
-  const float FRICTION = 0.97;
-}
+#include "systems/PlayerConst.h"
+#include <libdragon.h>
 
 namespace P64::Script::CC8B68CB9A118F18
 {
@@ -38,12 +29,17 @@ namespace P64::Script::CC8B68CB9A118F18
     uint8_t playerNumber;
 
     fm_vec2_t prevStageTilt;
-    fm_vec2_t stageTilt;
+    //fm_vec2_t stageTilt;
 
-    fm_vec3_t velocity;
+    fm_vec2_t inp1;
+    fm_vec2_t inp2;
 
-    Object* camera;
+    //fm_vec3_t velocity;
 
+    Camera* camera;
+    Coll::BCS *bcs;
+    fm_vec3_t oldCamAimTarget;
+    fm_vec3_t camAimTarget;
     //Coll::Attach meshAttach;
 
   );
@@ -61,65 +57,112 @@ namespace P64::Script::CC8B68CB9A118F18
     //assertf(false, "no players!");
   }
 
-  void init_player(Object& obj, Data *data) {
-    data->playerNumber = get_player_number(obj, data);
-    data->prevStageTilt = fm_vec2_t{0.0, 0.0};
-    data->stageTilt = fm_vec2_t{0.0, 0.0};
-    data->velocity = fm_vec3_t{0.0, 0.0, 0.0};
-  }
-
   void update_player_movement(Object& obj, Data *data, float deltaTime) {
     fm_vec2_t tilt = User::world.stageTilt[data->playerNumber];
     fm_vec3_t downForce = {
       sinf(tilt.x), 
-      GRAVITY * cosf(tilt.x) * cosf(tilt.y), 
+      -cosf(tilt.x) * cosf(tilt.y), 
       sinf(tilt.y)
     };
+
+    downForce *= Player::GRAVITY;
     
     // xz velocity += tilt
-    data->velocity *= FRICTION;
-    data->velocity += downForce * fm_vec3_t{1.0, 0.0, 1.0};
-    obj.pos += data->velocity * deltaTime * 60;
+    data->bcs->velocity *= Player::FRICTION;
+    data->bcs->velocity += downForce;
+    //obj.pos += data->velocity * deltaTime * 60;
   }
+
+  fm_vec2_t adjust_input_to_cam(fm_vec2_t input, Camera* cam)
+{
+    fm_vec3_t camForward = cam->getViewDir();
+
+    // keep movement on XZ plane
+    camForward.y = 0.0f;
+
+    if (fm_vec3_len(&camForward) > 0.001f)
+        fm_vec3_norm(&camForward, &camForward);
+
+    fm_vec3_t camRight = {
+        camForward.z,
+        0.0f,
+        -camForward.x
+    };
+
+    fm_vec3_t moveDir = camForward * input.y + camRight * input.x;
+
+    return {moveDir.x, moveDir.z};
+}
 
   void update_stage_tilt(Object& obj, Data *data, float deltaTime) {
     data->prevStageTilt = User::world.stageTilt[data->playerNumber];
     joypad_inputs_t input = joypad_get_inputs((joypad_port_t)data->playerNumber);
     fm_vec2_t normInpVec{-input.stick_x/128.0f, input.stick_y/128.0f};
-    fm_vec2_t tiltDiff = (normInpVec * FM_DEG2RAD(MAX_TILT_ANGLE) - data->prevStageTilt);
-    User::world.stageTilt[data->playerNumber] += tiltDiff * TILT_EASING;
+
+    fm_vec2_t camAdjustedInput;
+    if (fm_vec2_len2(&normInpVec) != 0) {
+      camAdjustedInput = adjust_input_to_cam(normInpVec, data->camera);
+    } else {
+      camAdjustedInput = normInpVec;
+    }
+    
+    data->inp1 = normInpVec;
+    data->inp2 = camAdjustedInput;
+    
+
+    fm_vec2_t tiltDiff = (camAdjustedInput * FM_DEG2RAD(Player::MAX_TILT_ANGLE) - data->prevStageTilt);
+    User::world.stageTilt[data->playerNumber] += tiltDiff * Player::TILT_EASING;
   }
 
   void update_cameras(Object& obj, Data *data, float deltaTime)
   {
     Object* player = obj.getScene().getObjectById(User::world.playerIDs[data->playerNumber]);
-    Camera* camera = &obj.getScene().getObjectById(User::world.cameraIDs[data->playerNumber])->getComponent<Comp::Camera>()->camera;
     fm_vec3_t newCamPos;
-    fm_vec3_t newCamRot;
-
-    fm_vec3_t playerRot = player->rot * fm_vec3_t{0.0, 0.0, 1.0}; // rot * forward
     
+    data->oldCamAimTarget = data->camAimTarget;
+
+    data->camAimTarget = data->bcs->velocity * fm_vec3_t{1.0, 0.0, 1.0};
+    if (fm_vec3_len2(&data->camAimTarget) < 0.01) {
+      data->camAimTarget = obj.pos - data->camera->getPos();
+    }
+
+    fm_vec3_norm(&data->camAimTarget, &data->camAimTarget);
+
+    //fm_vec3_t playerRot = player->rot * fm_vec3_t{0.0, 0.0, 1.0}; // rot * forward
+    
+    fm_vec3_t playerNextPos = player->pos + data->bcs->velocity * deltaTime;
+
     // lateral movement away from player
-    newCamPos = player->pos-(playerRot*CAM_PLAYER_BEHIND*fm_vec3_t{1.0, 0.0, 1.0});
+    newCamPos = playerNextPos-(data->camAimTarget*Player::CAM_PLAYER_BEHIND*fm_vec3_t{1.0, 0.0, 1.0});
     
     // height
-    newCamPos += fm_vec3_t{0.0, CAM_PLAYER_ABOVE, 0.0};
+    newCamPos += fm_vec3_t{0.0, Player::CAM_PLAYER_ABOVE, 0.0};
     
-    fm_vec3_t camLookAt = {player->pos + CAM_PLAYER_FOCUS_OFFSET};
+    fm_vec3_t camLookAt = {playerNextPos + Player::CAM_PLAYER_FOCUS_OFFSET};
 
-    camera->setLookAt(newCamPos, camLookAt);
+    data->camera->setLookAt(newCamPos, camLookAt);
     
   }
 
-  void update_player_body(Coll::BCS bcs, Object& obj, Data *data) {
+  void init_player(Object& obj, Data *data) {
+    data->playerNumber = get_player_number(obj, data);
+    data->prevStageTilt = fm_vec2_t{0.0, 0.0};
+    data->bcs->velocity = fm_vec3_t{0.01, 0.0, 0.0};
+    data->camera = &obj.getScene().getObjectById(User::world.cameraIDs[data->playerNumber])->getComponent<Comp::Camera>()->camera;
+    update_cameras(obj, data, 1/60.0f);
+  }
+
+  void update_player_body(Coll::BCS *bcs, Object& obj, Data *data) {
     //bcs.center -= data->meshAttach.update(bcs.center);
-    bcs.velocity = data->velocity;
+    //bcs->velocity = data->velocity;
     //obj.pos += bcs.velocity;
   }
 
   void init(Object& obj, Data *data)
   {
     // initialization, this is called once when the object spawns
+    auto coll = obj.getComponent<Comp::CollBody>();
+    data->bcs = &coll->bcs;
     init_player(obj, data);
   }
 
@@ -131,12 +174,11 @@ namespace P64::Script::CC8B68CB9A118F18
   void update(Object& obj, Data *data, float deltaTime)
   {
     // this is called once every frame, put your main logic here
-    auto coll = obj.getComponent<Comp::CollBody>();
-    Coll::BCS &bcs = coll->bcs;
+    
     update_stage_tilt(obj, data, deltaTime);
 
     update_player_movement(obj, data, deltaTime);
-    update_player_body(bcs, obj, data);
+    //update_player_body(data->bcs, obj, data);
 
     update_cameras(obj, data, deltaTime);
   }
@@ -145,6 +187,19 @@ namespace P64::Script::CC8B68CB9A118F18
   {
     // this is called once every frame, and for every active camera.
     // Put your drawing code here
+    fm_vec3_t camPos = data->camera->getPos();
+    rdpq_text_printf(nullptr, 1, 10, 200, "P: %.4f", camPos.x);
+    rdpq_text_printf(nullptr, 1, 10, 210, "P: %.4f", camPos.y);
+    rdpq_text_printf(nullptr, 1, 10, 220, "P: %.4f", camPos.z);
+    rdpq_text_printf(nullptr, 1, 110, 200, "P: %.4f", obj.pos.x);
+    rdpq_text_printf(nullptr, 1, 110, 210, "P: %.4f", obj.pos.y);
+    rdpq_text_printf(nullptr, 1, 110, 220, "P: %.4f", obj.pos.z);
+
+    rdpq_text_printf(nullptr, 1, 10, 160, "P: %.4f", data->inp1.x);
+    rdpq_text_printf(nullptr, 1, 10, 170, "P: %.4f", data->inp1.y);
+    rdpq_text_printf(nullptr, 1, 10, 180, "P: %.4f", data->inp2.x);
+    rdpq_text_printf(nullptr, 1, 10, 190, "P: %.4f", data->inp2.y);
+    
   }
 
   void onEvent(Object& obj, Data *data, const ObjectEvent &event)
@@ -167,7 +222,7 @@ namespace P64::Script::CC8B68CB9A118F18
     if(event.otherMesh)
     {
       //data->meshAttach.setReference(event.otherMesh);
-      data->velocity *= -1;
+      //data->velocity *= -1;
       return;
     }
   }

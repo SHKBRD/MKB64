@@ -49,6 +49,28 @@
         "id": 0,
         "name": "Code",
         "uuid": 14540762614326292475
+      },
+      {
+        "data": {
+          "halfExtend": [
+            8.0,
+            8.0,
+            8.0
+          ],
+          "isFixed": false,
+          "isTrigger": false,
+          "maskRead": 1,
+          "maskWrite": 2,
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "type": 1
+        },
+        "id": 5,
+        "name": "Collision-Body",
+        "uuid": 3839085733702663893
       }
     ],
     "enabled": true,

@@ -4,6 +4,7 @@
 #include "scene/components/camera.h"
 
 #include "systems/World.h"
+#include "systems/PlayerConst.h"
 
 namespace P64::Script::C2A3F0709DB1C5E7
 {
@@ -44,6 +45,20 @@ namespace P64::Script::C2A3F0709DB1C5E7
     }
   };
 
+  fm_vec3_t get_lateral_off(fm_quat_t objRot) {
+    fm_vec3_t fwd3 = objRot * fm_vec3_t{0.0f, 0.0f, 1.0f};
+
+    fm_vec3_t fwd2 = { fwd3.x, 0.0, fwd3.z };
+
+    float lenSq = (fwd2.x * fwd2.x) + (fwd2.y * fwd2.y);
+    if (lenSq > 0.00001f) {
+        fm_vec3_norm(&fwd2, &fwd2);
+    } else {
+        fwd2 = { 0.0f, 0.0f, 1.0f }; 
+    }
+
+    return fwd2;
+}
 
   void add_players(uint8_t playerCount, Object& obj, Data *data) 
   {
@@ -51,12 +66,20 @@ namespace P64::Script::C2A3F0709DB1C5E7
     for (uint8_t i=0; i<playerCount; ++i) {
       Scene& sc = obj.getScene();
 
-      fm_vec3_t startPos = data->startPos.get()->pos;
+      Object* startObj = data->startPos.get();
 
-      uint16_t newPlayerId = sc.addObject("ball/Ball.pf"_asset, startPos);
+      uint16_t newPlayerId = sc.addObject("ball/Ball.pf"_asset, startObj->pos);
       User::world.playerIDs[i] = newPlayerId;
 
-      uint16_t playerCam = sc.addObject("Camera.pf"_asset, startPos);
+      fm_vec3_t camPosOff = get_lateral_off(startObj->rot);
+      
+
+      uint16_t playerCam = sc.addObject("Camera.pf"_asset, 
+        startObj->pos+camPosOff * Player::CAM_PLAYER_BEHIND + fm_vec3_t{0.0, Player::CAM_PLAYER_ABOVE, 0.0}, 
+        fm_vec3_t{1.0, 1.0, 1.0}, 
+        startObj->rot
+      );
+
       User::world.cameraIDs[i] = playerCam;
       
     }
