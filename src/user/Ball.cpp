@@ -42,7 +42,8 @@ namespace P64::Script::CC8B68CB9A118F18
     Coll::BCS *bcs;
     fm_vec3_t oldCamAimTarget;
     fm_vec3_t camAimTarget;
-    //Coll::Attach meshAttach;
+
+    fm_vec3_t ballRotSpeed;
 
   );
 
@@ -122,7 +123,7 @@ namespace P64::Script::CC8B68CB9A118F18
 
     float angleDiff = ExtraMath::vec2_angle_norm_diff(&oldTarget2D, &newTarget2D);
 
-    float maxStep = Player::PLAYER_CAMERA_TURN_SPEED_DEG_PER_SEC * deltaTime;
+    float maxStep = FM_DEG2RAD(Player::PLAYER_CAMERA_TURN_SPEED_DEG_PER_SEC) * deltaTime;
 
     float step = angleDiff;
     if (angleDiff > maxStep)
@@ -176,6 +177,7 @@ namespace P64::Script::CC8B68CB9A118F18
     data->bcs->velocity = fm_vec3_t{0.01, 0.0, 0.0};
     data->oldCamAimTarget = {1.0, 0.0, 0.0};
     data->camAimTarget = {1.0, 0.0, 0.0};
+    data->ballRotSpeed = {0.0, 0.0, 0.0};
     data->camera = &obj.getScene().getObjectById(User::world.cameraIDs[data->playerNumber])->getComponent<Comp::Camera>()->camera;
     update_cameras(obj, data, 1/60.0f);
   }
@@ -184,6 +186,18 @@ namespace P64::Script::CC8B68CB9A118F18
     //bcs.center -= data->meshAttach.update(bcs.center);
     //bcs->velocity = data->velocity;
     //obj.pos += bcs.velocity;
+  }
+
+  void update_ball_rolling(Object& obj, Data *data, float deltaTime) {
+    bool onFloor = data->bcs->hitTriTypes & Coll::TriType::FLOOR;
+    if (onFloor) {
+      data->ballRotSpeed.x = -data->bcs->velocity.x;
+      data->ballRotSpeed.z = data->bcs->velocity.z;
+    }
+    fm_vec3_t zAxis{0.0, 0.0, 1.0};
+    fm_vec3_t xAxis{1.0, 0.0, 0.0};
+    fm_quat_rotate(&obj.rot, &obj.rot, &zAxis, data->ballRotSpeed.x/500.0);
+    fm_quat_rotate(&obj.rot, &obj.rot, &xAxis, data->ballRotSpeed.z/500.0);
   }
 
   void init(Object& obj, Data *data)
@@ -206,6 +220,7 @@ namespace P64::Script::CC8B68CB9A118F18
     update_stage_tilt(obj, data, deltaTime);
     update_cameras(obj, data, deltaTime);
     update_player_movement(obj, data, deltaTime);
+    update_ball_rolling(obj, data, deltaTime);
     //update_player_body(data->bcs, obj, data);
 
     
