@@ -196,8 +196,19 @@ namespace P64::Script::CC8B68CB9A118F18
     }
     fm_vec3_t zAxis{0.0, 0.0, 1.0};
     fm_vec3_t xAxis{1.0, 0.0, 0.0};
-    fm_quat_rotate(&obj.rot, &obj.rot, &zAxis, data->ballRotSpeed.x/500.0);
-    fm_quat_rotate(&obj.rot, &obj.rot, &xAxis, data->ballRotSpeed.z/500.0);
+    
+    // Rotating this way results in local-space rotations, which don't work well if you're rotating on more than one axis
+    // fm_quat_rotate(&obj.rot, &obj.rot, &zAxis, data->ballRotSpeed.x/500.0);
+    // fm_quat_rotate(&obj.rot, &obj.rot, &xAxis, data->ballRotSpeed.z/500.0);
+
+    // Rotating this way results in world-space rotations, which makes multi-axis rotations work much better
+    fm_quat_t zAxisQuat{};
+    fm_quat_from_axis_angle(&zAxisQuat, &zAxis, data->ballRotSpeed.x/400.0);
+    fm_quat_t xAxisQuat{};
+    fm_quat_from_axis_angle(&xAxisQuat, &xAxis, data->ballRotSpeed.z/400.0);
+
+    fm_quat_mul(&obj.rot, &zAxisQuat, &obj.rot);
+    fm_quat_mul(&obj.rot, &xAxisQuat, &obj.rot);
   }
 
   void init(Object& obj, Data *data)
