@@ -6,6 +6,7 @@
 #include "scene/components/camera.h"
 #include "scene/components/collBody.h"
 #include "collision/attach.h"
+#include "collision/flags.h"
 
 
 #include "systems/World.h"
@@ -13,6 +14,7 @@
 #include "systems/DeltaLerp.h"
 #include "systems/ExtraMath.h"
 #include <libdragon.h>
+
 
 namespace P64::Script::CC8B68CB9A118F18
 {
@@ -44,7 +46,7 @@ namespace P64::Script::CC8B68CB9A118F18
     fm_vec3_t camAimTarget;
 
     fm_vec3_t ballRotSpeed;
-
+    
   );
 
   // The following functions are called by the engine at different points in the object's lifecycle.
@@ -216,6 +218,7 @@ namespace P64::Script::CC8B68CB9A118F18
     // initialization, this is called once when the object spawns
     auto coll = obj.getComponent<Comp::CollBody>();
     data->bcs = &coll->bcs;
+    data->bcs->flags |= Coll::BCSFlags::BOUNCY;
     init_player(obj, data);
   }
 
@@ -242,17 +245,17 @@ namespace P64::Script::CC8B68CB9A118F18
     // this is called once every frame, and for every active camera.
     // Put your drawing code here
     fm_vec3_t camPos = data->camera->getPos();
-    rdpq_text_printf(nullptr, 1, 10, 200, "P: %.4f", camPos.x);
-    rdpq_text_printf(nullptr, 1, 10, 210, "P: %.4f", camPos.y);
-    rdpq_text_printf(nullptr, 1, 10, 220, "P: %.4f", camPos.z);
-    rdpq_text_printf(nullptr, 1, 110, 200, "P: %.4f", obj.pos.x);
-    rdpq_text_printf(nullptr, 1, 110, 210, "P: %.4f", obj.pos.y);
-    rdpq_text_printf(nullptr, 1, 110, 220, "P: %.4f", obj.pos.z);
+    rdpq_text_printf(nullptr, 1, 10, 200, "CamX: %.3f", camPos.x);
+    rdpq_text_printf(nullptr, 1, 10, 210, "CamY: %.3f", camPos.y);
+    rdpq_text_printf(nullptr, 1, 10, 220, "CamZ: %.3f", camPos.z);
+    rdpq_text_printf(nullptr, 1, 110, 200, "BallX: %.3f", obj.pos.x);
+    rdpq_text_printf(nullptr, 1, 110, 210, "BallY: %.3f", obj.pos.y);
+    rdpq_text_printf(nullptr, 1, 110, 220, "BallZ: %.3f", obj.pos.z);
 
-    rdpq_text_printf(nullptr, 1, 10, 160, "P: %.4f", data->inp1.x);
-    rdpq_text_printf(nullptr, 1, 10, 170, "P: %.4f", data->inp1.y);
-    rdpq_text_printf(nullptr, 1, 10, 180, "P: %.4f", data->inp2.x);
-    rdpq_text_printf(nullptr, 1, 10, 190, "P: %.4f", data->inp2.y);
+    rdpq_text_printf(nullptr, 1, 10, 160, "InpX: %.3f", data->inp1.x);
+    rdpq_text_printf(nullptr, 1, 10, 170, "InpY: %.3f", data->inp1.y);
+    rdpq_text_printf(nullptr, 1, 10, 180, "CamInpX: %.3f", data->inp2.x);
+    rdpq_text_printf(nullptr, 1, 10, 190, "CamInpY: %.3f", data->inp2.y);
     
   }
 
