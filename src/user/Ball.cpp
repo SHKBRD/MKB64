@@ -10,6 +10,8 @@
 
 #include "systems/World.h"
 #include "systems/PlayerConst.h"
+#include "systems/DeltaLerp.h"
+#include "systems/ExtraMath.h"
 #include <libdragon.h>
 
 namespace P64::Script::CC8B68CB9A118F18
@@ -114,6 +116,31 @@ namespace P64::Script::CC8B68CB9A118F18
     User::world.stageTilt[data->playerNumber] += tiltDiff * Player::STAGE_TILT_EASING;
   }
 
+  void smooth_camera_turning(Object& obj, Data *data, float deltaTime) {
+    fm_vec2_t oldTarget2D = {data->oldCamAimTarget.x, data->oldCamAimTarget.z};
+    fm_vec2_t newTarget2D = {data->camAimTarget.x, data->camAimTarget.z};
+
+    float angleDiff = ExtraMath::vec2_angle_norm_diff(&oldTarget2D, &newTarget2D);
+
+    float maxStep = Player::PLAYER_CAMERA_TURN_SPEED_DEG_PER_SEC * deltaTime;
+
+    float step = angleDiff;
+    if (angleDiff > maxStep)
+        step = maxStep;
+
+    // determine rotation direction. libdragon also only has 3d cross products, so here's another custom one :P
+    float cross = ExtraMath::vec2_cross(&oldTarget2D, &newTarget2D);
+    if (cross < 0.0f)
+        step = -step;
+
+    fm_vec2_t smoothTurnedTarget =
+        ExtraMath::vec2_rotate_by_angle(&oldTarget2D, step);
+
+    fm_vec3_t lerpedLookAngle{smoothTurnedTarget.x, 0.0f, smoothTurnedTarget.y};
+
+    data->camAimTarget = lerpedLookAngle;
+  }
+
   void update_cameras(Object& obj, Data *data, float deltaTime)
   {
     Object* player = obj.getScene().getObjectById(User::world.playerIDs[data->playerNumber]);
@@ -127,11 +154,7 @@ namespace P64::Script::CC8B68CB9A118F18
     }
     fm_vec3_norm(&data->camAimTarget, &data->camAimTarget);
 
-    // LERP CODE START
-    fm_vec3_t lerpedLookAngle{};
-    fm_vec3_lerp(&lerpedLookAngle, &data->oldCamAimTarget, &data->camAimTarget, Player::PLAYER_CAMERA_TURN_EASING);
-    data->camAimTarget = lerpedLookAngle;
-    // LERP CODE END
+    smooth_camera_turning(obj, data, deltaTime);
 
     fm_vec3_t playerNextPos = player->pos + data->bcs->velocity * deltaTime;
 
@@ -151,8 +174,8 @@ namespace P64::Script::CC8B68CB9A118F18
     data->playerNumber = get_player_number(obj, data);
     data->prevStageTilt = fm_vec2_t{0.0, 0.0};
     data->bcs->velocity = fm_vec3_t{0.01, 0.0, 0.0};
-    data->camAimTarget = {};
-    data->camAimTarget = {};
+    data->oldCamAimTarget = {1.0, 0.0, 0.0};
+    data->camAimTarget = {1.0, 0.0, 0.0};
     data->camera = &obj.getScene().getObjectById(User::world.cameraIDs[data->playerNumber])->getComponent<Comp::Camera>()->camera;
     update_cameras(obj, data, 1/60.0f);
   }
@@ -181,11 +204,11 @@ namespace P64::Script::CC8B68CB9A118F18
     // this is called once every frame, put your main logic here
     
     update_stage_tilt(obj, data, deltaTime);
-
+    update_cameras(obj, data, deltaTime);
     update_player_movement(obj, data, deltaTime);
     //update_player_body(data->bcs, obj, data);
 
-    update_cameras(obj, data, deltaTime);
+    
   }
 
   void draw(Object& obj, Data *data, float deltaTime)
